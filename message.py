@@ -21,12 +21,17 @@ class MeshtasticMessage:
         return random.getrandbits(32)
 
     def encrypt_packet(self, packet: mesh_pb2.MeshPacket) -> bytes:
+        # Wrap payload in Data protobuf message
+        data_msg = mesh_pb2.Data()
+        data_msg.payload = self.payload
+        serialized = data_msg.SerializeToString()
+
         nonce_packet_id = packet.id.to_bytes(8, "little")
         nonce_from_node = getattr(packet, "from").to_bytes(8, "little")
         nonce = nonce_packet_id + nonce_from_node
         cipher = Cipher(algorithms.AES(self.config.key), modes.CTR(nonce), backend=default_backend())
         encryptor = cipher.encryptor()
-        return encryptor.update(self.payload) + encryptor.finalize()
+        return encryptor.update(serialized) + encryptor.finalize()
 
     def packet(self) -> mesh_pb2.MeshPacket:
         packet = mesh_pb2.MeshPacket()
