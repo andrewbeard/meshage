@@ -14,6 +14,9 @@ dependencies = [
     "meshtastic>=2.7.0",
 ]
 
+[project.urls]
+Homepage = "https://github.com/andrewbeard/meshage"
+
 [dependency-groups]
 dev = [
     "black>=25.1.0",
