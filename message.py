@@ -38,10 +38,9 @@ class MeshtasticMessage:
         nonce_packet_id = packet.id.to_bytes(8, "little")
         nonce_from_node = getattr(packet, "from").to_bytes(8, "little")
         nonce = nonce_packet_id + nonce_from_node
-        cipher = Cipher(
+        encryptor = Cipher(
             algorithms.AES(self.config.key), modes.CTR(nonce), backend=default_backend()
-        )
-        encryptor = cipher.encryptor()
+        ).encryptor()
         return encryptor.update(data_msg.SerializeToString()) + encryptor.finalize()
 
     def packet(self) -> mesh_pb2.MeshPacket:

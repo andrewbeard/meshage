@@ -1,6 +1,12 @@
+"""
+A large portion of this code is adapted from MQTT Connect for Meshtastic, version 0.8.7
+https://github.com/pdxlocations/connect/blob/869be93a3c32d9550cbd63c1ae0ccb61686eca60/mqtt-connect.py
+A number of functions have been broken up and reorganized to make it more usable as a library.
+"""
 import base64
 import os
 from configparser import ConfigParser
+from contextlib import suppress
 from typing import Any, Dict, TypedDict
 
 from utils import xor_checksum
@@ -41,7 +47,7 @@ class MQTTConfig:
 
     def load_config(self):
         config = ConfigParser()
-        try:
+        with suppress(FileNotFoundError):
             config.read("mqtt.conf")
             for key in self.config:
                 value = config.get("mqtt", key)
@@ -49,8 +55,6 @@ class MQTTConfig:
                     value = int(value)
                 if value:
                     self.config[key] = value
-        except FileNotFoundError:
-            pass
 
     def load_env(self):
         for key in self.config:
@@ -76,7 +80,7 @@ class MQTTConfig:
         key_bytes = base64.b64decode(key.encode("utf-8"))
         h_key = xor_checksum(key_bytes)
         h_name = xor_checksum(self.config["channel"].encode("utf-8"))
-        return int(h_name ^ h_key)
+        return h_name ^ h_key
 
     @property
     def aiomqtt_config(self) -> Dict(str, Any):
