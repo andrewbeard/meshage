@@ -7,6 +7,7 @@ A number of functions have been broken up and reorganized to make it more usable
 """
 
 import random
+from abc import ABC, abstractmethod
 
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
@@ -16,14 +17,14 @@ from meshtastic.protobuf import mesh_pb2, mqtt_pb2, portnums_pb2
 from config import MQTTConfig
 
 
-class MeshtasticMessage:
-    def __init__(self, payload: bytes | str, config: MQTTConfig):
+class MeshtasticMessage(ABC):
+    type: portnums_pb2.PortNum.ValueType
+
+    @abstractmethod
+    def __init__(self, payload: bytes, config: MQTTConfig):
         self.config = config
-        if isinstance(payload, str):
-            self.payload = payload.encode("utf-8")
-        else:
-            self.payload = payload
         self.message_id = self.generate_message_id()
+        self.payload = payload
 
     def generate_message_id(self) -> int:
         return random.getrandbits(32)
@@ -31,7 +32,7 @@ class MeshtasticMessage:
     def encrypt_packet(self, packet: mesh_pb2.MeshPacket) -> bytes:
         # Wrap payload in Data protobuf message
         data_msg = mesh_pb2.Data()
-        data_msg.portnum = portnums_pb2.TEXT_MESSAGE_APP
+        data_msg.portnum = self.type
         data_msg.payload = self.payload
         data_msg.bitfield = 1
 
