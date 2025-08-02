@@ -1,7 +1,7 @@
 import base64
 import os
 from configparser import ConfigParser
-from typing import TypedDict
+from typing import Any, Dict, TypedDict
 
 from utils import xor_checksum
 
@@ -77,3 +77,12 @@ class MQTTConfig:
         h_key = xor_checksum(key_bytes)
         h_name = xor_checksum(self.config["channel"].encode("utf-8"))
         return int(h_name ^ h_key)
+
+    @property
+    def aiomqtt_config(self) -> Dict(str, Any):
+        return {
+            "hostname": self.config["host"],
+            "port": self.config["port"],
+            "username": self.config["username"],
+            "password": self.config["password"],
+        }

@@ -1,3 +1,4 @@
+#! /usr/bin/env python3
 import asyncio
 
 import aiomqtt
@@ -8,12 +9,7 @@ from message import MeshtasticMessage
 
 async def main():
     config = MQTTConfig()
-    async with aiomqtt.Client(
-        hostname=config.config["host"],
-        port=config.config["port"],
-        username=config.config["username"],
-        password=config.config["password"],
-    ) as client:
+    async with aiomqtt.Client(**config.aiomqtt_config) as client:
         message = MeshtasticMessage("Hello, world!", config)
         await client.publish(config.topic, bytes(message))
 
