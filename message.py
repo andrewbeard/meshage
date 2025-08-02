@@ -1,3 +1,11 @@
+"""
+An object oriented interface for sending and receiving Meshtastic messages via MQTT.
+
+A large portion of this code is adapted from MQTT Connect for Meshtastic, version 0.8.7
+https://github.com/pdxlocations/connect/blob/869be93a3c32d9550cbd63c1ae0ccb61686eca60/mqtt-connect.py
+A number of functions have been broken up and reorganized to make it more usable as a library.
+"""
+
 import random
 
 from cryptography.hazmat.backends import default_backend
