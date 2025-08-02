@@ -3,7 +3,7 @@ import random
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.backends import default_backend
 from meshtastic import BROADCAST_NUM
-from meshtastic.protobuf import mesh_pb2, mqtt_pb2
+from meshtastic.protobuf import mesh_pb2, mqtt_pb2, portnums_pb2
 
 from config import MQTTConfig
 
@@ -23,15 +23,16 @@ class MeshtasticMessage:
     def encrypt_packet(self, packet: mesh_pb2.MeshPacket) -> bytes:
         # Wrap payload in Data protobuf message
         data_msg = mesh_pb2.Data()
+        data_msg.portnum = portnums_pb2.TEXT_MESSAGE_APP
         data_msg.payload = self.payload
-        serialized = data_msg.SerializeToString()
+        data_msg.bitfield = 1
 
         nonce_packet_id = packet.id.to_bytes(8, "little")
         nonce_from_node = getattr(packet, "from").to_bytes(8, "little")
         nonce = nonce_packet_id + nonce_from_node
         cipher = Cipher(algorithms.AES(self.config.key), modes.CTR(nonce), backend=default_backend())
         encryptor = cipher.encryptor()
-        return encryptor.update(serialized) + encryptor.finalize()
+        return encryptor.update(data_msg.SerializeToString()) + encryptor.finalize()
 
     def packet(self) -> mesh_pb2.MeshPacket:
         packet = mesh_pb2.MeshPacket()
