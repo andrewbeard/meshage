@@ -1,7 +1,7 @@
 import random
 
-from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from meshtastic import BROADCAST_NUM
 from meshtastic.protobuf import mesh_pb2, mqtt_pb2, portnums_pb2
 
@@ -30,14 +30,18 @@ class MeshtasticMessage:
         nonce_packet_id = packet.id.to_bytes(8, "little")
         nonce_from_node = getattr(packet, "from").to_bytes(8, "little")
         nonce = nonce_packet_id + nonce_from_node
-        cipher = Cipher(algorithms.AES(self.config.key), modes.CTR(nonce), backend=default_backend())
+        cipher = Cipher(
+            algorithms.AES(self.config.key), modes.CTR(nonce), backend=default_backend()
+        )
         encryptor = cipher.encryptor()
         return encryptor.update(data_msg.SerializeToString()) + encryptor.finalize()
 
     def packet(self) -> mesh_pb2.MeshPacket:
         packet = mesh_pb2.MeshPacket()
         packet.id = self.message_id
-        setattr(packet, "from", self.config.config["userid"])  # from is a reserved keyword
+        setattr(
+            packet, "from", self.config.config["userid"]
+        )  # from is a reserved keyword
         packet.to = BROADCAST_NUM
         packet.want_ack = False
         packet.channel = self.config.encoded_channel

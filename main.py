@@ -1,5 +1,6 @@
-import aiomqtt
 import asyncio
+
+import aiomqtt
 
 from config import MQTTConfig
 from message import MeshtasticMessage
@@ -18,4 +19,4 @@ async def main():
 
 
 if __name__ == "__main__":
-   asyncio.run(main())
+    asyncio.run(main())
