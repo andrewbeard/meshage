@@ -19,7 +19,7 @@ jobs:
           python-version: 3.13
       - name: Install dependencies
         run: |
-          python -m install uv
+          python -m pip install uv
           uv sync
       - name: Create package
         run: |
