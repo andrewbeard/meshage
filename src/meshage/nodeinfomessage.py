@@ -1,7 +1,7 @@
-from meshtastic.protobuf import portnums_pb2, mesh_pb2
+from meshtastic.protobuf import mesh_pb2, portnums_pb2
 
-from .message import MeshtasticMessage
 from .config import MQTTConfig
+from .message import MeshtasticMessage
 
 
 class MeshtasticNodeInfoMessage(MeshtasticMessage):
