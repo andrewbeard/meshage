@@ -89,7 +89,7 @@ class MQTTConfig:
         return h_name ^ h_key
 
     @property
-    def aiomqtt_config(self) -> Dict[str, Any]:
+    def aiomqtt_config(self) -> Dict[str, str | int]:
         return {
             "hostname": self.config["host"],
             "port": self.config["port"],
