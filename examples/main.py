@@ -3,9 +3,9 @@ import asyncio
 
 import aiomqtt
 
-from config import MQTTConfig
-from nodeinfomessage import MeshtasticNodeInfoMessage
-from textmessage import MeshtasticTextMessage
+from meshage.config import MQTTConfig
+from meshage.nodeinfomessage import MeshtasticNodeInfoMessage
+from meshage.textmessage import MeshtasticTextMessage
 
 
 async def main():

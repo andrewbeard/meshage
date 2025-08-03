@@ -14,7 +14,7 @@ from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from meshtastic import BROADCAST_NUM
 from meshtastic.protobuf import mesh_pb2, mqtt_pb2, portnums_pb2
 
-from config import MQTTConfig
+from .config import MQTTConfig
 
 
 class MeshtasticMessage(ABC):

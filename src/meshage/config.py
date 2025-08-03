@@ -3,13 +3,19 @@ A large portion of this code is adapted from MQTT Connect for Meshtastic, versio
 https://github.com/pdxlocations/connect/blob/869be93a3c32d9550cbd63c1ae0ccb61686eca60/mqtt-connect.py
 A number of functions have been broken up and reorganized to make it more usable as a library.
 """
+
 import base64
 import os
 from configparser import ConfigParser
 from contextlib import suppress
 from typing import Any, Dict, TypedDict
 
-from utils import xor_checksum
+
+def xor_checksum(data: bytes) -> int:
+    checksum: int = 0
+    for char in data:
+        checksum ^= char
+    return checksum
 
 
 class ConfigSet(TypedDict):
