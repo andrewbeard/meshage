@@ -6,7 +6,7 @@ A number of functions have been broken up and reorganized to make it more usable
 
 import base64
 import os
-from configparser import ConfigParser
+from configparser import ConfigParser, NoSectionError
 from contextlib import suppress
 from typing import Any, Dict, TypedDict
 
@@ -53,7 +53,7 @@ class MQTTConfig:
 
     def load_config(self):
         config = ConfigParser()
-        with suppress(FileNotFoundError):
+        with suppress(FileNotFoundError, NoSectionError):
             config.read("mqtt.conf")
             for key in self.config:
                 value = config.get("mqtt", key)
