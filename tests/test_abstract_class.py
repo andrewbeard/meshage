@@ -19,7 +19,7 @@ class TestAbstractClassBehavior(unittest.TestCase):
         """Test that trying to create an instance of MeshtasticMessage fails."""
         config = MQTTConfig()
         
-        from meshage.message import MeshtasticMessage
+        from meshage.messages import MeshtasticMessage
         
         with self.assertRaises(TypeError):
             # Attempting to instantiate the abstract base class should raise TypeError
@@ -27,7 +27,7 @@ class TestAbstractClassBehavior(unittest.TestCase):
 
     def test_abstract_class_has_abstract_methods(self):
         """Test that the abstract class has the expected abstract methods."""
-        from meshage.message import MeshtasticMessage
+        from meshage.messages import MeshtasticMessage
 
         # Check that the class is abstract
         self.assertTrue(hasattr(MeshtasticMessage, "__abstractmethods__"))
@@ -40,8 +40,7 @@ class TestAbstractClassBehavior(unittest.TestCase):
         """Test that concrete subclasses can be instantiated."""
         config = MQTTConfig()
 
-        from meshage.nodeinfomessage import MeshtasticNodeInfoMessage
-        from meshage.textmessage import MeshtasticTextMessage
+        from meshage.messages import MeshtasticNodeInfoMessage, MeshtasticTextMessage
 
         # These should work without raising TypeError
         text_message = MeshtasticTextMessage("test", config)

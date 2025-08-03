@@ -6,8 +6,7 @@ import unittest
 from unittest.mock import AsyncMock, patch
 
 from meshage.config import MQTTConfig
-from meshage.nodeinfomessage import MeshtasticNodeInfoMessage
-from meshage.textmessage import MeshtasticTextMessage
+from meshage.messages import MeshtasticNodeInfoMessage, MeshtasticTextMessage
 
 
 class TestIntegration(unittest.TestCase):

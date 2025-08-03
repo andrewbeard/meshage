@@ -8,9 +8,7 @@ import pytest
 from meshtastic.protobuf import mesh_pb2, portnums_pb2
 
 from meshage.config import xor_checksum
-from meshage.message import MeshtasticMessage
-from meshage.nodeinfomessage import MeshtasticNodeInfoMessage
-from meshage.textmessage import MeshtasticTextMessage
+from meshage.messages import MeshtasticMessage, MeshtasticNodeInfoMessage, MeshtasticTextMessage
 
 
 class TestConfigPytest:

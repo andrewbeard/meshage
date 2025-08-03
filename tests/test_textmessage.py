@@ -7,7 +7,7 @@ import unittest
 from meshtastic.protobuf import portnums_pb2
 
 from meshage.config import MQTTConfig
-from meshage.textmessage import MeshtasticTextMessage
+from meshage.messages import MeshtasticTextMessage
 
 
 class TestMeshtasticTextMessage(unittest.TestCase):

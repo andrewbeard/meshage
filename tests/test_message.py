@@ -6,7 +6,7 @@ import unittest
 from unittest.mock import Mock, patch
 
 from meshage.config import MQTTConfig
-from meshage.message import MeshtasticMessage
+from meshage.messages import MeshtasticMessage
 
 
 class MockMeshtasticMessage(MeshtasticMessage):
@@ -49,7 +49,7 @@ class TestMeshtasticMessage(unittest.TestCase):
         # Should have generated unique IDs
         self.assertEqual(len(ids), 100)
 
-    @patch("meshage.message.Cipher")
+    @patch("meshage.messages.Cipher")
     def test_encrypt_packet(self, mock_cipher):
         """Test packet encryption."""
         # Mock the Cipher and encryptor
