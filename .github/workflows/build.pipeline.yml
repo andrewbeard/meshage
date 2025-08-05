@@ -47,7 +47,7 @@ jobs:
           uv build
       - uses: actions/attest-build-provenance@v2
         with:
-          subject-path: dist/
+          subject-path: dist/meshage*
       - name: Upload package
         uses: actions/upload-artifact@v4
         with:
