@@ -8,7 +8,11 @@ import pytest
 from meshtastic.protobuf import mesh_pb2, portnums_pb2
 
 from meshage.config import xor_checksum
-from meshage.messages import MeshtasticMessage, MeshtasticNodeInfoMessage, MeshtasticTextMessage
+from meshage.messages import (
+    MeshtasticMessage,
+    MeshtasticNodeInfoMessage,
+    MeshtasticTextMessage,
+)
 
 
 class TestConfigPytest:
@@ -29,11 +33,20 @@ class TestConfigPytest:
     def test_config_defaults(self, config):
         """Test that config defaults are set correctly."""
         # Test that all required keys exist and have valid values
-        required_keys = ["host", "port", "username", "password", "root_topic", "channel", "userid", "key"]
+        required_keys = [
+            "host",
+            "port",
+            "username",
+            "password",
+            "root_topic",
+            "channel",
+            "userid",
+            "key",
+        ]
         for key in required_keys:
             assert key in config.config
             assert config.config[key] is not None
-        
+
         # Test that key is properly decoded (not the default "AQ==")
         assert config.config["key"] != "AQ=="
         assert len(config.config["key"]) > 4
@@ -52,7 +65,9 @@ class TestConfigPytest:
     def test_receive_topic_property(self, config):
         """Test the receive_topic property formatting."""
         # Test that topic follows the expected format
-        expected_format = f"{config.config['root_topic']}/2/e/{config.config['channel']}/#"
+        expected_format = (
+            f"{config.config['root_topic']}/2/e/{config.config['channel']}/#"
+        )
         assert config.receive_topic == expected_format
 
     def test_key_property(self, config):

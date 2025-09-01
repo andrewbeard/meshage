@@ -77,7 +77,9 @@ class TestMQTTConfig(unittest.TestCase):
     def test_receive_topic_property(self):
         """Test the receive_topic property formatting."""
         # Test that topic follows the expected format
-        expected_format = f"{self.config.config['root_topic']}/2/e/{self.config.config['channel']}/#"
+        expected_format = (
+            f"{self.config.config['root_topic']}/2/e/{self.config.config['channel']}/#"
+        )
         self.assertEqual(self.config.receive_topic, expected_format)
 
     def test_key_property(self):

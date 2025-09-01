@@ -18,9 +18,9 @@ class TestAbstractClassBehavior(unittest.TestCase):
     def test_abstract_class_instantiation_fails(self):
         """Test that trying to create an instance of MeshtasticMessage fails."""
         config = MQTTConfig()
-        
+
         from meshage.messages import MeshtasticMessage
-        
+
         with self.assertRaises(TypeError):
             # Attempting to instantiate the abstract base class should raise TypeError
             MeshtasticMessage(b"test payload", config)

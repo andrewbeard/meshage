@@ -100,9 +100,9 @@ class TestMeshtasticMessage(unittest.TestCase):
         """Test service envelope creation."""
         # Create a real packet instead of a mock
         packet = self.message.packet()
-        
+
         envelope = self.message.service_envelope(packet)
-        
+
         # Verify envelope attributes
         self.assertEqual(envelope.packet, packet)
         self.assertEqual(envelope.channel_id, self.config.config["channel"])

@@ -205,7 +205,7 @@ class TestIntegration(unittest.TestCase):
             message = MeshtasticTextMessage("test", None)
             # The error would occur when trying to use the config
             _ = message.packet()
-        
+
         # Test with None payload for text message
         with self.assertRaises((TypeError, AttributeError)):
             MeshtasticTextMessage(None, self.config)
