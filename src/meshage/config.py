@@ -73,8 +73,12 @@ class MQTTConfig:
         return "!%08x" % self.config["userid"]
 
     @property
-    def topic(self) -> str:
+    def publish_topic(self) -> str:
         return f"{self.config['root_topic']}/2/e/{self.config['channel']}/{self.userid}"
+
+    @property
+    def receive_topic(self) -> str:
+        return f"{self.config['root_topic']}/2/e/{self.config['channel']}/#"
 
     @property
     def key(self) -> bytes:
