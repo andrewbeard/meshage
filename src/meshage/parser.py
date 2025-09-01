@@ -26,7 +26,11 @@ class MeshtasticMessageParser:
             logging.exception(f"Failed to parse service envelope")
             return None
 
-        logging.info(
+        if getattr(service_envelope.packet, 'from') == self.config.config['userid']:
+            logging.debug(f"Ignoring message from self")
+            return None
+
+        logging.debug(
             f"Received message from {getattr(service_envelope.packet, 'from')}"
         )
 
