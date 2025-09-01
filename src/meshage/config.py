@@ -8,7 +8,7 @@ import base64
 import os
 from configparser import ConfigParser, NoSectionError
 from contextlib import suppress
-from typing import Any, Dict, TypedDict
+from typing import Dict, TypedDict
 
 
 def xor_checksum(data: bytes) -> int:
