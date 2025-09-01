@@ -58,10 +58,9 @@ class MeshtasticMessageParser:
         # Put both parts into a single byte array.
         nonce = nonce_packet_id + nonce_from_node
 
-        cipher = Cipher(
+        decryptor = Cipher(
             algorithms.AES(self.config.key), modes.CTR(nonce), backend=default_backend()
-        )
-        decryptor = cipher.decryptor()
+        ).decryptor()
         decrypted_bytes = (
             decryptor.update(getattr(packet, "encrypted")) + decryptor.finalize()
         )
