@@ -5,7 +5,7 @@ from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from meshtastic.protobuf import mesh_pb2, mqtt_pb2, portnums_pb2
 
 from .config import MQTTConfig
-from .messages import MeshtasticMessage
+from .messages import MeshtasticMessage, MeshtasticTextMessage
 
 
 class MeshtasticMessageParser:
@@ -44,9 +44,9 @@ class MeshtasticMessageParser:
                 return None
 
         if service_envelope.packet.decoded.portnum == portnums_pb2.TEXT_MESSAGE_APP:
-            text_payload = service_envelope.packet.decoded.payload.decode("utf-8")
-            logging.info(f"Received text message: {text_payload}")
+            return MeshtasticTextMessage(service_envelope.packet)
 
+        logging.warning(f"Unknown message type: {service_envelope.packet.decoded.portnum}")
         return None
 
     def decrypt_packet(self, packet: mesh_pb2.MeshPacket):

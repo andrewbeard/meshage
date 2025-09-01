@@ -5,12 +5,13 @@ import logging
 import aiomqtt
 
 from meshage.config import MQTTConfig
+from meshage.messages import MeshtasticTextMessage
 from meshage.parser import MeshtasticMessageParser
 
 
 async def main():
     logging.basicConfig(
-        format="%(asctime)s %(levelname)s:%(message)s", level=logging.DEBUG
+        format="%(asctime)s %(levelname)s:%(message)s", level=logging.INFO
     )
 
     config = MQTTConfig()
@@ -18,7 +19,9 @@ async def main():
         await client.subscribe(config.receive_topic)
         parser = MeshtasticMessageParser(config)
         async for message in client.messages:
-            parser.parse_message(message.payload)
+            parsed_message = parser.parse_message(message.payload)
+            if isinstance(parsed_message, MeshtasticTextMessage):
+                logging.info(f"Received text message: {parsed_message.text}")
 
 
 if __name__ == "__main__":

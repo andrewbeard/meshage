@@ -86,3 +86,9 @@ class MeshtasticTextMessage(MeshtasticMessage):
     def __init__(self, payload: str, config: MQTTConfig):
         self.type = portnums_pb2.TEXT_MESSAGE_APP
         super().__init__(payload.encode("utf-8"), config)
+
+    def __init__(self, packet: mesh_pb2.MeshPacket):
+        self.message_id = packet.id
+        self.type = portnums_pb2.TEXT_MESSAGE_APP
+        self.text = packet.decoded.payload.decode("utf-8")
+        
