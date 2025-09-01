@@ -26,7 +26,7 @@ class MeshtasticMessageParser:
             logging.exception(f"Failed to parse service envelope")
             return None
 
-        if getattr(service_envelope.packet, 'from') == self.config.config['userid']:
+        if getattr(service_envelope.packet, "from") == self.config.config["userid"]:
             logging.debug(f"Ignoring message from self")
             return None
 
@@ -44,9 +44,11 @@ class MeshtasticMessageParser:
                 return None
 
         if service_envelope.packet.decoded.portnum == portnums_pb2.TEXT_MESSAGE_APP:
-            return MeshtasticTextMessage(service_envelope.packet)
+            return MeshtasticTextMessage.decode(service_envelope.packet)
 
-        logging.warning(f"Unknown message type: {service_envelope.packet.decoded.portnum}")
+        logging.warning(
+            f"Unknown message type: {service_envelope.packet.decoded.portnum}"
+        )
         return None
 
     def decrypt_packet(self, packet: mesh_pb2.MeshPacket):

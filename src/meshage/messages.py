@@ -83,12 +83,14 @@ class MeshtasticNodeInfoMessage(MeshtasticMessage):
 
 
 class MeshtasticTextMessage(MeshtasticMessage):
-    def __init__(self, payload: str, config: MQTTConfig):
+    def __init__(self, payload: str | None = None, config: MQTTConfig | None = None):
         self.type = portnums_pb2.TEXT_MESSAGE_APP
-        super().__init__(payload.encode("utf-8"), config)
+        if payload is not None or config is not None:
+            super().__init__(payload.encode("utf-8"), config)
 
-    def __init__(self, packet: mesh_pb2.MeshPacket):
-        self.message_id = packet.id
-        self.type = portnums_pb2.TEXT_MESSAGE_APP
-        self.text = packet.decoded.payload.decode("utf-8")
-        
+    @classmethod
+    def decode(cls, packet: mesh_pb2.MeshPacket) -> "MeshtasticTextMessage":
+        obj = cls()
+        cls.message_id = packet.id
+        cls.text = packet.decoded.payload.decode("utf-8")
+        return obj
