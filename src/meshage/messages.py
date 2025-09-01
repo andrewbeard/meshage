@@ -83,12 +83,40 @@ class MeshtasticNodeInfoMessage(MeshtasticMessage):
 
 
 class MeshtasticTextMessage(MeshtasticMessage):
-    def __init__(self, payload: str, config: MQTTConfig):
-        self.type = portnums_pb2.TEXT_MESSAGE_APP
-        super().__init__(payload.encode("utf-8"), config)
+    """Text message that can be built either from raw text (for sending) or from
+    a received ``mesh_pb2.MeshPacket`` (for parsing).
 
-    def __init__(self, packet: mesh_pb2.MeshPacket):
-        self.message_id = packet.id
+    The class now accepts *positional* arguments to disambiguate between the two
+    use-cases in a single constructor so that existing call-sites like
+
+        MeshtasticTextMessage("Hello", config)
+
+    and
+
+        MeshtasticTextMessage(packet)
+
+    both continue to work.
+    """
+
+    def __init__(self, *args):
+        # Ensure the common type is always set first
         self.type = portnums_pb2.TEXT_MESSAGE_APP
-        self.text = packet.decoded.payload.decode("utf-8")
+
+        # Case 1: (payload: str, config: MQTTConfig)
+        if len(args) == 2 and isinstance(args[0], str):
+            payload, config = args
+            super().__init__(payload.encode("utf-8"), config)
+
+        # Case 2: (packet: mesh_pb2.MeshPacket,)
+        elif len(args) == 1 and isinstance(args[0], mesh_pb2.MeshPacket):
+            packet = args[0]
+            # We don't have a config object in this context; set to None.
+            self.config = None
+            self.message_id = packet.id
+            self.text = packet.decoded.payload.decode("utf-8")
+
+        else:
+            raise TypeError(
+                "MeshtasticTextMessage expects (str, MQTTConfig) or (mesh_pb2.MeshPacket,)"
+            )
         
