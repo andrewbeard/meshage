@@ -43,11 +43,17 @@ class TestConfigPytest:
         expected_userid = "!%08x" % 452664778
         assert config.userid == expected_userid
 
-    def test_topic_property(self, config):
-        """Test the topic property formatting."""
+    def test_publish_topic_property(self, config):
+        """Test the publish_topic property formatting."""
         # Test that topic follows the expected format
         expected_format = f"{config.config['root_topic']}/2/e/{config.config['channel']}/{config.userid}"
-        assert config.topic == expected_format
+        assert config.publish_topic == expected_format
+
+    def test_receive_topic_property(self, config):
+        """Test the receive_topic property formatting."""
+        # Test that topic follows the expected format
+        expected_format = f"{config.config['root_topic']}/2/e/{config.config['channel']}/#"
+        assert config.receive_topic == expected_format
 
     def test_key_property(self, config):
         """Test the key property base64 decoding."""
@@ -271,7 +277,7 @@ class TestIntegrationPytest:
             assert len(node_info_bytes) > 0
 
             expected_topic = f"{config.config['root_topic']}/2/e/{config.config['channel']}/{config.userid}"
-            assert config.topic == expected_topic
+            assert config.publish_topic == expected_topic
 
 
 class TestErrorHandlingPytest:

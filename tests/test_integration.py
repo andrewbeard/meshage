@@ -196,7 +196,7 @@ class TestIntegration(unittest.TestCase):
 
         # Verify topic format
         expected_topic = f"{self.config.config['root_topic']}/2/e/{self.config.config['channel']}/{self.config.userid}"
-        self.assertEqual(self.config.topic, expected_topic)
+        self.assertEqual(self.config.publish_topic, expected_topic)
 
     def test_error_handling(self):
         """Test error handling in message creation."""

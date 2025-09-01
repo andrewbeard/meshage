@@ -68,11 +68,17 @@ class TestMQTTConfig(unittest.TestCase):
         expected_userid = "!%08x" % 452664778
         self.assertEqual(self.config.userid, expected_userid)
 
-    def test_topic_property(self):
+    def test_publish_topic_property(self):
         """Test the topic property formatting."""
         # Test that topic follows the expected format
         expected_format = f"{self.config.config['root_topic']}/2/e/{self.config.config['channel']}/{self.config.userid}"
-        self.assertEqual(self.config.topic, expected_format)
+        self.assertEqual(self.config.publish_topic, expected_format)
+
+    def test_receive_topic_property(self):
+        """Test the receive_topic property formatting."""
+        # Test that topic follows the expected format
+        expected_format = f"{self.config.config['root_topic']}/2/e/{self.config.config['channel']}/#"
+        self.assertEqual(self.config.receive_topic, expected_format)
 
     def test_key_property(self):
         """Test the key property base64 decoding."""
