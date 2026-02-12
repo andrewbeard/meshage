@@ -352,7 +352,7 @@ test = [
 
 [[package]]
 name = "meshtastic"
-version = "2.7.6"
+version = "2.7.7"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "bleak" },
@@ -364,9 +364,9 @@ dependencies = [
     { name = "requests" },
     { name = "tabulate" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/ad/aa/6214568909b376a1a480d6639dfcc4756e9c5b9e0679c3f25ac5ec2582aa/meshtastic-2.7.6.tar.gz", hash = "sha256:6974148f13556193c5733c9a07df4e052a040a94ad7be1f9f3f7c7567085c5e8", size = 282963, upload-time = "2026-01-05T02:25:19.882Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/ea/4b/046435a03681ad4626b077cf709916f2f97600cc8b4e34131add51b9e26a/meshtastic-2.7.7.tar.gz", hash = "sha256:6e2dc663e61841235966f04fe4c3257445e643f8dc7b8eaf7286c4b71a106511", size = 285850, upload-time = "2026-01-24T16:34:21.626Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/bf/16/84e02ff31a3eaef08a94567832854e297d164a77462b160b72ff50025606/meshtastic-2.7.6-py3-none-any.whl", hash = "sha256:bc63b441c7af275a4166492abdf8141b992538a201cf9e6b9d9f9af3e247dfea", size = 331124, upload-time = "2026-01-05T02:25:18.575Z" },
+    { url = "https://files.pythonhosted.org/packages/d1/04/ca95992eedadbff7f82effdfbf3be4df1553214928806ae9bbd8c296aabb/meshtastic-2.7.7-py3-none-any.whl", hash = "sha256:743e8f1138cb1aeb57b3579c70f9229b494a09d2de3292fbdb3f98bc0cf4b0ee", size = 334485, upload-time = "2026-01-24T16:34:20.225Z" },
 ]
 
 [[package]]
