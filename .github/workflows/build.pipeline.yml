@@ -72,7 +72,7 @@ jobs:
           name: python-package-distributions
           path: dist/
       - name: Create release draft
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           files: dist/*
           draft: true
